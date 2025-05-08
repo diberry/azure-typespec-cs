@@ -26,26 +26,9 @@ namespace TypeSpec.Helpers.JsonConverters
 
         public override JsonConverter? CreateConverter(Type typeToConvert)
         {
-            var result = base.CreateConverter(typeToConvert);
-            var resultSet = result as ConstrainedSetConverter<T>;
-            if (resultSet != null)
-            {
-                resultSet.InnerConverterFactory = (c, o) => new NumericJsonConverter<T>(MinValue, MaxValue, MinValueExclusive, MaxValueExclusive, o);
-                return resultSet;
-            }
-            var resultEnumerable = result as ConstrainedEnumerableConverter<T>;
-            if (resultEnumerable != null)
-            {
-                resultEnumerable.InnerConverterFactory = (c, o) => new NumericJsonConverter<T>(MinValue, MaxValue, MinValueExclusive, MaxValueExclusive, o);
-                return resultEnumerable;
-            }
-            var resultStandardArray = result as ConstrainedStandardArrayConverter<T>;
-            if (resultStandardArray != null)
-            {
-                resultStandardArray.InnerConverterFactory = (c, o) => new NumericJsonConverter<T>(MinValue, MaxValue, MinValueExclusive, MaxValueExclusive, o);
-                return resultStandardArray;
-            }
-            throw new InvalidOperationException($"Cannot create converter for {typeToConvert} with {this}");
+            var result = base.CreateConverter(typeToConvert) as ConstrainedArrayConverter<T>;
+            if (result != null) result.InnerConverterFactory = (c, o) => new NumericJsonConverter<T>(MinValue, MaxValue, MinValueExclusive, MaxValueExclusive, o);
+            return result;
         }
     }
 }

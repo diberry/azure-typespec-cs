@@ -21,30 +21,11 @@ namespace TypeSpec.Helpers.JsonConverters
         public int MaxItemLength { get { return _maxItemLength.HasValue ? _maxItemLength.Value : 0; } set { _maxItemLength = value; } }
         public string? Pattern { get; set; }
 
-        override public JsonConverter? CreateConverter(Type typeToConvert)
+        override public JsonConverter<string[]> CreateConverter(Type typeToConvert)
         {
-            var result = base.CreateConverter(typeToConvert);
-            var resultSet = result as ConstrainedSetConverter<string>;
-            if (resultSet != null)
-            {
-                resultSet.InnerConverterFactory = (c, o) => new StringJsonConverter(MinItemLength, MaxItemLength, Pattern, o);
-                return resultSet;
-            }
-
-            var resultEnumerable = result as ConstrainedEnumerableConverter<string>;
-            if (resultEnumerable != null)
-            {
-                resultEnumerable.InnerConverterFactory = (c, o) => new StringJsonConverter(MinItemLength, MaxItemLength, Pattern, o);
-                return resultEnumerable;
-            }
-
-            var resultStandardArray = result as ConstrainedStandardArrayConverter<string>;
-            if (resultStandardArray != null)
-            {
-                resultStandardArray.InnerConverterFactory = (c, o) => new StringJsonConverter(MinItemLength, MaxItemLength, Pattern, o);
-                return resultStandardArray;
-            }
-            throw new InvalidOperationException($"Cannot create converter for {typeToConvert} with {this}");
+            var result = base.CreateConverter(typeToConvert) as ConstrainedArrayConverter<string>;
+            result!.InnerConverterFactory = (c, o) => new StringJsonConverter(MinItemLength, MaxItemLength, Pattern, o);
+            return result;
         }
     }
 }

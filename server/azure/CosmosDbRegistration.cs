@@ -20,12 +20,12 @@ namespace DemoService.Service
             // Register the HttpContextAccessor for accessing the HTTP context
             builder.Services.AddHttpContextAccessor();
             
-            // Register JSON serialization provider
-            builder.Services.AddScoped<TypeSpec.Helpers.IJsonSerializationProvider, TypeSpec.Helpers.JsonSerializationProvider>();
-            
             // Get configuration settings
             var cosmosEndpoint = builder.Configuration["Configuration:AzureCosmosDb:Endpoint"];
             var cosmosDatabaseName = builder.Configuration["Configuration:AzureCosmosDb:DatabaseName"] ?? "WidgetDb";
+            
+            // Validate configuration
+            ValidateCosmosDbConfiguration(cosmosEndpoint);
             
             // Configure Cosmos DB client options
             var cosmosClientOptions = new CosmosClientOptions
@@ -39,17 +39,6 @@ namespace DemoService.Service
             
             builder.Services.AddSingleton(serviceProvider => 
             {
-                // Validate configuration
-                if (string.IsNullOrEmpty(cosmosEndpoint))
-                {
-                    throw new ArgumentException("Cosmos DB Endpoint must be specified in configuration");
-                }
-                
-                // Create chained credential with fallback options
-                // var credential = new ChainedTokenCredential(
-                //     new ManagedIdentityCredential(),
-                //     new AzureCliCredential()
-                // );
                 var credential = new DefaultAzureCredential();
                 
                 // Create Cosmos client with token credential authentication
@@ -61,6 +50,19 @@ namespace DemoService.Service
             
             // Register WidgetsCosmos implementation of IWidgets
             builder.Services.AddScoped<IWidgets, WidgetsCosmos>();
+        }
+
+        /// <summary>
+        /// Validates the Cosmos DB configuration settings
+        /// </summary>
+        /// <param name="cosmosEndpoint">The Cosmos DB endpoint</param>
+        /// <exception cref="ArgumentException">Thrown when configuration is invalid</exception>
+        private static void ValidateCosmosDbConfiguration(string cosmosEndpoint)
+        {
+            if (string.IsNullOrEmpty(cosmosEndpoint))
+            {
+                throw new ArgumentException("Cosmos DB Endpoint must be specified in configuration");
+            }
         }
     }
 }

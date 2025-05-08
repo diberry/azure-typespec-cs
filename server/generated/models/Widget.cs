@@ -6,8 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using TypeSpec.Helpers.JsonConverters;
 using TypeSpec.Helpers;
-
-namespace DemoService
+namespace DemoService.Service.Models
 {
 
     public partial class Widget

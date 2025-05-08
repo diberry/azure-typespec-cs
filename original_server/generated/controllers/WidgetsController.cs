@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
-using DemoService.Service.Models;
-using DemoService.Service;
+using DemoService;
+using TypeSpec.Http;
 
-namespace DemoService.Service.Controllers
+namespace DemoService.Controllers
 {
     [ApiController]
     public partial class WidgetsController : ControllerBase
@@ -23,17 +23,21 @@ namespace DemoService.Service.Controllers
         }
         internal virtual IWidgets WidgetsImpl { get; }
 
-
+        ///<summary>
+        /// List widgets
+        ///</summary>
         [HttpGet]
         [Route("/widgets")]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Widget[]))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(WidgetList))]
         public virtual async Task<IActionResult> List()
         {
             var result = await WidgetsImpl.ListAsync();
             return Ok(result);
         }
 
-
+        ///<summary>
+        /// Read widgets
+        ///</summary>
         [HttpGet]
         [Route("/widgets/{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Widget))]
@@ -43,27 +47,33 @@ namespace DemoService.Service.Controllers
             return Ok(result);
         }
 
-
+        ///<summary>
+        /// Create a widget
+        ///</summary>
         [HttpPost]
         [Route("/widgets")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Widget))]
-        public virtual async Task<IActionResult> Create(WidgetsCreateRequest body)
+        public virtual async Task<IActionResult> Create(Widget body)
         {
-            var result = await WidgetsImpl.CreateAsync(body.Weight, body.Color);
+            var result = await WidgetsImpl.CreateAsync(body);
             return Ok(result);
         }
 
-
+        ///<summary>
+        /// Update a widget
+        ///</summary>
         [HttpPatch]
         [Route("/widgets/{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Widget))]
-        public virtual async Task<IActionResult> Update(string id, WidgetsUpdateRequest body)
+        public virtual async Task<IActionResult> Update(string id, WidgetMergePatchUpdate body)
         {
-            var result = await WidgetsImpl.UpdateAsync(id, body.Weight, body.Color);
+            var result = await WidgetsImpl.UpdateAsync(id, body);
             return Ok(result);
         }
 
-
+        ///<summary>
+        /// Delete a widget
+        ///</summary>
         [HttpDelete]
         [Route("/widgets/{id}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent, Type = typeof(void))]
@@ -71,6 +81,18 @@ namespace DemoService.Service.Controllers
         {
             await WidgetsImpl.DeleteAsync(id);
             return NoContent();
+        }
+
+        ///<summary>
+        /// Analyze a widget
+        ///</summary>
+        [HttpPost]
+        [Route("/widgets/{id}/analyze")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(AnalyzeResult))]
+        public virtual async Task<IActionResult> Analyze(string id)
+        {
+            var result = await WidgetsImpl.AnalyzeAsync(id);
+            return Ok(result);
         }
 
     }

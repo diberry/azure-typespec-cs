@@ -3,44 +3,25 @@
 #nullable enable
 
 using System;
-using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using TypeSpec.Helpers.JsonConverters;
 using TypeSpec.Helpers;
-using TypeSpec.Http;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using DemoService.Service.Models;
 
-namespace DemoService
+namespace DemoService.Service
 {
 
     public interface IWidgets
     {
-        ///<summary>
-        /// List widgets
-        ///</summary>
-        Task<WidgetList> ListAsync();
-        ///<summary>
-        /// Read widgets
-        ///</summary>
+        Task<Widget[]> ListAsync();
         Task<Widget> ReadAsync(string id);
-        ///<summary>
-        /// Create a widget
-        ///</summary>
-        Task<Widget> CreateAsync(Widget body);
-        ///<summary>
-        /// Update a widget
-        ///</summary>
-        Task<Widget> UpdateAsync(string id, WidgetMergePatchUpdate body);
-        ///<summary>
-        /// Delete a widget
-        ///</summary>
+        Task<Widget> CreateAsync(int weight, string color);
+        Task<Widget> UpdateAsync(string id, int weight, string color);
         Task DeleteAsync(string id);
-        ///<summary>
-        /// Analyze a widget
-        ///</summary>
-        Task<AnalyzeResult> AnalyzeAsync(string id);
 
     }
 }

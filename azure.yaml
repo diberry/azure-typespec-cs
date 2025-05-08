@@ -5,7 +5,7 @@ metadata:
     template: azd-init@1.14.0
 services:
     api:
-        project: ../../dotnet-scaffold-sesrver
+        project: ./server
         host: containerapp
         language: dotnet
 pipeline:
