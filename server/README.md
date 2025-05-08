@@ -12,7 +12,7 @@ title: Next Steps
 
 ## More Information
 
-- See [Code Layout](docs/usage.md) for information about the generated code
-- See [Emitter Usage](docs/emitter.md) for details on how to use the emitter.
+- See [Code Layout](https://typespec.io/docs/emitters/servers/http-server-csharp/project/) for information about the generated code
+- See [Emitter Usage](https://typespec.io/docs/emitters/servers/http-server-csharp/reference/emitter/) for details on how to use the emitter.
 - File issues or provide feedback in [TypeSpec Issues](https://github.com/microsoft/typespec/issues/new/choose)
 - Get information about Typespec on the [TypeSpec website](https://typespec.io)
