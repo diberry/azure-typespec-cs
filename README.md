@@ -6,6 +6,28 @@ This project demonstrates how to create and deploy a RESTful API using TypeSpec 
 
 TypeSpec is a language for describing cloud service APIs and generating other API description languages, client and service code, documentation, and other assets. TypeSpec provides highly extensible core language primitives that can describe API shapes common among REST, GraphQL, gRPC, and other protocols.
 
+## Deploy this repo to Azure
+
+You must have an Azure Subscription. If you don't have one, [create one here for free](https://azure.microsoft.com/free/). 
+
+1. Open in [Codespaces](https://github.com/diberry/azure-typespec-cs) or [Visual Studio Developer Container](https://code.visualstudio.com/docs/devcontainers/containers). This has all prereqs installed for you.
+
+1. Sign into Azure Developer CLI. 
+
+    ```console
+    azd auth login
+    ```
+
+1. Deploy to Aazure
+
+    ```console
+    azd up
+    ```
+
+## Learn how to scaffold a new .NET API server from a TypeSpec defintion
+
+Use this readme to learn the process of how this repo was built.
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v16 or later)
