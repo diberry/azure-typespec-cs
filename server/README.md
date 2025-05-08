@@ -5,9 +5,9 @@ title: Next Steps
 # Next Steps
 
 - Use the SwaggerUI endpoint to test out the running service
-- Update business logic mocks with real business logic
-  - `mocks/Widgets.cs`
-- Update `mocks/MockRegistration.cs` if you update the constructor of business logic implementations.
+- Update business logic implementation with real business logic
+  - `Azure/WidgetCosmos.cs`
+- Update `Azure/CosmosRegistration.cs` if you update the constructor of business logic implementations.
 - Update development and production configuration to suit your needs
 
 ## More Information
