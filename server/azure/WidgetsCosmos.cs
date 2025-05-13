@@ -1,13 +1,13 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using DemoService.Service.Models;
+using WidgetService.Service.Models;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DemoService.Service
+namespace WidgetService.Service
 {
     /// <summary>
     /// Implementation of the IWidgets interface that uses Azure Cosmos DB for persistence
